@@ -35,19 +35,32 @@ CPU only_one_periodic_task {
   
   APPMODE stdAppmode {};
   
-  ALARM one_second {
+  ALARM task_A_timer {
     COUNTER = SystemCounter;
-    ACTION = ACTIVATETASK { TASK = my_periodic_task; };
-    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 100; CYCLETIME = 100; };
+    ACTION = ACTIVATETASK { TASK = task_A; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 10; CYCLETIME = 50; };
+  };
+  
+  ALARM task_B_timer {
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK { TASK = task_B; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 150; CYCLETIME = 75; };
   };
   
   ALARM stopper {
     COUNTER = SystemCounter;
     ACTION = ACTIVATETASK { TASK = stop; };
-    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 1000; CYCLETIME = 0; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 600; CYCLETIME = 0; };
   };
     
-  TASK my_periodic_task {
+  TASK task_A {
+    PRIORITY = 2;
+    AUTOSTART = TRUE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+  };
+
+ TASK task_B {
     PRIORITY = 1;
     AUTOSTART = FALSE;
     ACTIVATION = 1;
