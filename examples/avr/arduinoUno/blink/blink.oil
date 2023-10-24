@@ -26,24 +26,44 @@ CPU test {
 
   APPMODE stdAppmode {};
   
-  ALARM periodicAl {
-    COUNTER= SystemCounter;
-    ACTION = ACTIVATETASK {
-      TASK = periodicTask;
-    };
-    AUTOSTART = TRUE {
-      ALARMTIME = 1000; //activated each 1024 ms
-      CYCLETIME = 1000; //activated each 1024 ms
-      APPMODE = stdAppmode;
-    };
+ ALARM task_A_timer {
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK { TASK = task_A; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 500; CYCLETIME = 500; };
   };
 
-  TASK periodicTask {
-    PRIORITY = 20;
+   ALARM task_B_timer {
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK { TASK = task_B; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 1500; CYCLETIME = 750; };
+  };
+
+  ALARM stopper {
+    COUNTER = SystemCounter;
+    ACTION = ACTIVATETASK { TASK = stop; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 6000; CYCLETIME = 0; };
+  };
+
+  TASK task_A {
+    PRIORITY = 2;
+    AUTOSTART = TRUE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+  };
+
+ TASK task_B {
+    PRIORITY = 1;
     AUTOSTART = FALSE;
     ACTIVATION = 1;
     SCHEDULE = FULL;
-    STACKSIZE = 256;
   };
 
+  TASK stop {
+    PRIORITY = 99;
+    AUTOSTART = FALSE;
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+  };
+  
+ 
 };
