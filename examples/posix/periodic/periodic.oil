@@ -38,7 +38,7 @@ CPU only_one_periodic_task {
   ALARM task_A_timer {
     COUNTER = SystemCounter;
     ACTION = ACTIVATETASK { TASK = task_A; };
-    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 10; CYCLETIME = 50; };
+    AUTOSTART = TRUE { APPMODE = stdAppmode; ALARMTIME = 50; CYCLETIME = 50; };
   };
   
   ALARM task_B_timer {
@@ -68,10 +68,11 @@ CPU only_one_periodic_task {
   };
 
   TASK stop {
-    PRIORITY = 3;
+    PRIORITY = 99;
     AUTOSTART = FALSE;
     ACTIVATION = 1;
     SCHEDULE = FULL;
   };
   
 };
+
